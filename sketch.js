@@ -5,6 +5,7 @@ const canvasWidth = gridWidth * gridLength;
 const canvasHeight = gridHeight * gridLength;
 
 const grid = [];
+var infoMsg;
 
 var redsTurn = true;
 var selected = null;
@@ -70,12 +71,14 @@ function setup() {
 
     textSize(gridLength * .5);
     rectMode(CENTER);
+
+    infoMsg = document.querySelector("h1");
 }
 
 
 
 function draw() {
-    document.querySelector("h1").innerHTML = (redsTurn ? "Red" : "Black") + "'s turn";
+    infoMsg.innerHTML = (redsTurn ? "Red" : "Black") + "'s turn";
     drawgrid();
 }
 
@@ -101,6 +104,10 @@ function mouseClicked() {
                 grid[selected.y][selected.x] = null;
                 selected.moveTo(x, y);
                 grid[y][x] = selected;
+                
+                if (piece && piece.type == "K") {
+                    alert((redsTurn ? "Red" : "Black") + " win");
+                }
                 redsTurn = !redsTurn;
             }
             selected = null;
